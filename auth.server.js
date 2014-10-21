@@ -22,7 +22,9 @@ var app = express();
 app.use('/api', expressJwt({secret: secret}));
 
 app.use(bodyParser.json());
-app.use('/', express.static(__dirname + '/'));
+
+// serve static content (in dir 'public')
+app.use('/', express.static(__dirname + '/public'));
 
 app.use(function(err, req, res, next){
   if (err.constructor.name === 'UnauthorizedError') {
