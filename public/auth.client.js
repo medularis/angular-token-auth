@@ -28,7 +28,8 @@ function url_base64_decode(str) {
  */
 
 myApp.controller('UserCtrl', function ($scope, $http, $window) {
-  $scope.user = user_credentials;
+  $scope.username = user_credentials.username;
+  $scope.password = user_credentials.password;
   $scope.isAuthenticated = false;
   $scope.error = '';
   $scope.welcome = '';
@@ -36,7 +37,7 @@ myApp.controller('UserCtrl', function ($scope, $http, $window) {
 
   $scope.authenticate = function () {
     $http
-      .post('/authenticate', $scope.user)
+      .post('/authenticate', {username: $scope.username, password: $scope.password})
       .success(function (data, status, headers, config) {
         console.log('token: ' + data.token);
         $window.sessionStorage.token = data.token;
