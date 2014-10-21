@@ -7,6 +7,11 @@ var expressJwt = require('express-jwt'); //https://npmjs.org/package/express-jwt
 
 var secret = 'this is the secret secret secret 12356';
 
+var user_credentials = {
+  username: 'john.doe',
+  password: 'foobar'
+};
+
 var app = express();
 
 // We are going to protect /api routes with JWT
@@ -24,7 +29,7 @@ app.use(function(err, req, res, next){
 app.post('/authenticate', function (req, res) {
   //TODO validate req.body.username and req.body.password
   //if is invalid, return 401
-  if (!(req.body.username === 'john.doe' && req.body.password === 'foobar')) {
+  if (!(req.body.username === user_credentials.username && req.body.password === user_credentials.password)) {
     res.status(401).send('Wrong user or password');
     return;
   }
