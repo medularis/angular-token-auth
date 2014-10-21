@@ -1,8 +1,3 @@
-var user_credentials = {
-  username: 'john.doe',
-  password: 'foobar'
-};
-
 var myApp = angular.module('authApp', []);
 
 //this is used to parse the profile
@@ -28,8 +23,8 @@ function url_base64_decode(str) {
  */
 
 myApp.controller('UserCtrl', function ($scope, $http, $window) {
-  $scope.username = user_credentials.username;
-  $scope.password = user_credentials.password;
+  $scope.username = '';
+  $scope.password = '';
   $scope.isAuthenticated = false;
   $scope.error = '';
   $scope.welcome = '';
