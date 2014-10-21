@@ -26,6 +26,7 @@ function url_base64_decode(str) {
 myApp.controller('UserCtrl', function ($scope, $http, $window) {
   $scope.user = user_credentials;
   $scope.isAuthenticated = false;
+  $scope.error = '';
   $scope.welcome = '';
   $scope.message = '';
 
@@ -37,6 +38,7 @@ myApp.controller('UserCtrl', function ($scope, $http, $window) {
         $scope.isAuthenticated = true;
         var encodedProfile = data.token.split('.')[1];
         var profile = JSON.parse(url_base64_decode(encodedProfile));
+        $scope.error = '';
         $scope.welcome = 'Welcome ' + profile.first_name + ' ' + profile.last_name;
       })
       .error(function (data, status, headers, config) {
