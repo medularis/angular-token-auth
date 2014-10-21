@@ -21,11 +21,13 @@ var app = express();
 // We are going to protect /api routes with JWT
 app.use('/api', expressJwt({secret: secret}));
 
+// parse application/json
 app.use(bodyParser.json());
 
 // serve static content (in dir 'public')
 app.use('/', express.static(__dirname + '/public'));
 
+// error handler (after all the `app.use` calls)
 app.use(function(err, req, res, next){
   if (err.constructor.name === 'UnauthorizedError') {
     res.status(401).send('Unauthorized');
