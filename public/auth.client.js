@@ -1,6 +1,21 @@
 var myApp = angular.module('authApp', []);
 
+/*
+ UTILS
+ */
+
 var myUtils = myUtils || {};
+
+myUtils.splitJwt = function (token) {
+  // JWT's format is this: 'encodedHeader.encodedPayload.signature' e.g.
+  // 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ4IjoieSIsImlhdCI6MTQxMzkzMzY3OSwiZXhwIjoxNDEzOTUxNjc5fQ.ATiZ5Sw0qLxoMyhgohpHxjInIoXyKGLNXcUIYvnlyyg'
+  var tokenSplit = token.split('.');
+  return {
+    encodedHeader: tokenSplit[0],
+    encodedPayload: tokenSplit[1],
+    signature: tokenSplit[2]
+  };
+};
 
 myUtils.url_base64_decode = function (str) {
 //this is used to parse the profile
@@ -39,7 +54,7 @@ myApp.controller('UserCtrl', function ($scope, $http, $window) {
         console.log('token: ' + data.token);
         $window.sessionStorage.token = data.token;
         $scope.isAuthenticated = true;
-        var encodedProfile = data.token.split('.')[1];
+        var encodedProfile = myUtils.splitJwt(data.token).encodedPayload;
         var profile = JSON.parse(myUtils.url_base64_decode(encodedProfile));
         $scope.error = '';
         $scope.welcome = 'Welcome ' + profile.first_name + ' ' + profile.last_name;
