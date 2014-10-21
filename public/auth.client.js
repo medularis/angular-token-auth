@@ -1,7 +1,9 @@
 var myApp = angular.module('authApp', []);
 
+var myUtils = myUtils || {};
+
+myUtils.url_base64_decode = function (str) {
 //this is used to parse the profile
-function url_base64_decode(str) {
   var output = str.replace('-', '+').replace('_', '/');
   switch (output.length % 4) {
     case 0:
@@ -16,7 +18,7 @@ function url_base64_decode(str) {
       throw 'Illegal base64url string!';
   }
   return window.atob(output); //polifyll https://github.com/davidchambers/Base64.js
-}
+};
 
 /*
  CONTROLLERS
@@ -38,7 +40,7 @@ myApp.controller('UserCtrl', function ($scope, $http, $window) {
         $window.sessionStorage.token = data.token;
         $scope.isAuthenticated = true;
         var encodedProfile = data.token.split('.')[1];
-        var profile = JSON.parse(url_base64_decode(encodedProfile));
+        var profile = JSON.parse(myUtils.url_base64_decode(encodedProfile));
         $scope.error = '';
         $scope.welcome = 'Welcome ' + profile.first_name + ' ' + profile.last_name;
       })
