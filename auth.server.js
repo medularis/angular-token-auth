@@ -14,6 +14,10 @@ var user_credentials = {
 
 var app = express();
 
+/*
+ MIDDLEWARE
+ */
+
 // We are going to protect /api routes with JWT
 app.use('/api', expressJwt({secret: secret}));
 
@@ -25,6 +29,10 @@ app.use(function(err, req, res, next){
     res.status(401).send('Unauthorized');
   }
 });
+
+/*
+ ROUTING
+ */
 
 app.post('/authenticate', function (req, res) {
   //TODO validate req.body.username and req.body.password
@@ -53,6 +61,10 @@ app.get('/api/restricted', function (req, res) {
     name: 'foo'
   });
 });
+
+/*
+ SERVER
+ */
 
 app.listen(8080, function () {
   console.log('listening on http://localhost:8080');

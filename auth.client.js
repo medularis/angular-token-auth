@@ -23,6 +23,10 @@ function url_base64_decode(str) {
   return window.atob(output); //polifyll https://github.com/davidchambers/Base64.js
 }
 
+/*
+ CONTROLLERS
+ */
+
 myApp.controller('UserCtrl', function ($scope, $http, $window) {
   $scope.user = user_credentials;
   $scope.isAuthenticated = false;
@@ -70,6 +74,10 @@ myApp.controller('UserCtrl', function ($scope, $http, $window) {
   };
 
 });
+
+/*
+ INTERCEPTORS
+ */
 
 myApp.factory('authInterceptor', function ($rootScope, $q, $window) {
   return {
