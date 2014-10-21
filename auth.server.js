@@ -21,11 +21,14 @@ var consts = {
   }
 };
 
-var secret = 'this is the secret secret secret 12356';
+var utils = {};
 
-var user_credentials = {
-  username: 'john.doe',
-  password: 'foobar'
+utils.authenticate = function (username, password) {
+  return consts.user_credentials[username] === password;
+};
+
+utils.getProfile = function (username) {
+  return consts.user_profiles[username];
 };
 
 var app = express();
@@ -35,7 +38,7 @@ var app = express();
  */
 
 // We are going to protect /api routes with JWT
-app.use('/api', expressJwt({secret: secret}));
+app.use('/api', expressJwt({secret: consts.secret}));
 
 // parse application/json
 app.use(bodyParser.json());
@@ -57,20 +60,15 @@ app.use(function(err, req, res, next){
 app.post('/authenticate', function (req, res) {
   //TODO validate req.body.username and req.body.password
   //if is invalid, return 401
-  if (!(req.body.username === user_credentials.username && req.body.password === user_credentials.password)) {
+  if (!utils.authenticate(req.body.username, req.body.password)) {
     res.status(401).send('Wrong user or password');
     return;
   }
 
-  var profile = {
-    first_name: 'John',
-    last_name: 'Doe',
-    email: 'john@doe.com',
-    id: 123
-  };
+  var profile = utils.getProfile(req.body.username);
 
   // We are sending the profile inside the token
-  var token = jwt.sign(profile, secret, { expiresInMinutes: 60*5 });
+  var token = jwt.sign(profile, consts.secret, { expiresInMinutes: consts.token_expire_period });
 
   res.json({ token: token });
 });
