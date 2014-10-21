@@ -1,4 +1,4 @@
-var myApp = angular.module('myApp', []);
+var myApp = angular.module('authApp', []);
 
 //this is used to parse the profile
 function url_base64_decode(str) {

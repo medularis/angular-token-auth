@@ -6,7 +6,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0/angular.min.js"></script>
     <script src="./auth.client.js"></script>
   </head>
-  <body ng-app="myApp">
+  <body ng-app="authApp">
     <div ng-controller="UserCtrl">
       <span ng-show="isAuthenticated">{{welcome}}</span>
       <form ng-show="!isAuthenticated" ng-submit="submit()">
