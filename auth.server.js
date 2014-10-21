@@ -4,6 +4,22 @@ var bodyParser = require('body-parser');
 var jwt = require('jsonwebtoken');  //https://npmjs.org/package/node-jsonwebtoken
 var expressJwt = require('express-jwt'); //https://npmjs.org/package/express-jwt
 
+var consts = {
+  secret: 'this is the secret secret secret 12356',
+  token_expire_period: 60 * 5,  // minutes
+  user_credentials: {
+    // username: password
+    'john.doe': 'foobar'
+  },
+  user_profiles: {
+    'john.doe': {
+      first_name: 'John',
+      last_name: 'Doe',
+      email: 'john@doe.com',
+      id: 123
+    }
+  }
+};
 
 var secret = 'this is the secret secret secret 12356';
 
