@@ -38,6 +38,7 @@ myApp.controller('UserCtrl', function ($scope, $http, $window) {
     $http
       .post('/authenticate', $scope.user)
       .success(function (data, status, headers, config) {
+        console.log('token: ' + data.token);
         $window.sessionStorage.token = data.token;
         $scope.isAuthenticated = true;
         var encodedProfile = data.token.split('.')[1];
