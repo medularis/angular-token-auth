@@ -9,7 +9,7 @@
   <body ng-app="authApp">
     <div ng-controller="UserCtrl">
       <span ng-show="isAuthenticated">{{welcome}}</span>
-      <form ng-show="!isAuthenticated" ng-submit="submit()">
+      <form ng-show="!isAuthenticated" ng-submit="authenticate()">
         <input ng-model="user.username" type="text" name="user" placeholder="Username" />
         <input ng-model="user.password" type="password" name="pass" placeholder="Password" />
         <input type="submit" value="Login" />

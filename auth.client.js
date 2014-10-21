@@ -34,7 +34,7 @@ myApp.controller('UserCtrl', function ($scope, $http, $window) {
   $scope.welcome = '';
   $scope.message = '';
 
-  $scope.submit = function () {
+  $scope.authenticate = function () {
     $http
       .post('/authenticate', $scope.user)
       .success(function (data, status, headers, config) {
