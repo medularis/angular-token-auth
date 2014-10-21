@@ -9,9 +9,16 @@ var consts = {
   token_expire_period: 60 * 5,  // minutes
   user_credentials: {
     // username: password
+    'admin': 'admin',
     'john.doe': 'foobar'
   },
   user_profiles: {
+    'admin': {
+      first_name: 'Super',
+      last_name: 'Admin',
+      email: 'admin@x.com',
+      id: 1
+    },
     'john.doe': {
       first_name: 'John',
       last_name: 'Doe',
