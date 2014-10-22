@@ -17,8 +17,9 @@ myUtils.splitJwt = function (token) {
   };
 };
 
-myUtils.url_base64_decode = function (str) {
-//this is used to parse the profile
+myUtils.decodeBase64url = function (str) {
+  // Unfortunately there are variants of Base64 and we need to handle them
+  // http://en.wikipedia.org/wiki/Base64#Implementations_and_history
   var output = str.replace('-', '+').replace('_', '/');
   switch (output.length % 4) {
     case 0:
@@ -55,7 +56,7 @@ myApp.controller('UserCtrl', function ($scope, $http, $window) {
         $window.sessionStorage.token = data.token;
         $scope.isAuthenticated = true;
         var encodedProfile = myUtils.splitJwt(data.token).encodedPayload;
-        var profile = JSON.parse(myUtils.url_base64_decode(encodedProfile));
+        var profile = JSON.parse(myUtils.decodeBase64url(encodedProfile));
         $scope.error = '';
         $scope.welcome = 'Welcome ' + profile.first_name + ' ' + profile.last_name;
       })
