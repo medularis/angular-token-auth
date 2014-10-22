@@ -40,6 +40,9 @@ myApp.controller('UserCtrl', function ($scope, $http, $window) {
         var profile = JSON.parse(Base64.decode(encodedProfile));
         $scope.error = '';
         $scope.welcome = 'Welcome ' + profile.first_name + ' ' + profile.last_name;
+        // clear username and password
+        $scope.username = '';
+        $scope.password = '';
       })
       .error(function (data, status, headers, config) {
         // Erase the token if the user fails to log in
