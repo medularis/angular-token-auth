@@ -1,4 +1,4 @@
-var myApp = angular.module('authApp', []);
+var myApp = angular.module('authApp', ['angular-jwt']);
 
 /*
  UTILS
@@ -21,7 +21,7 @@ myUtils.splitJwt = function (token) {
  CONTROLLERS
  */
 
-myApp.controller('UserCtrl', function ($scope, $http, $window) {
+myApp.controller('UserCtrl', function ($scope, $http, $window, jwtHelper) {
   $scope.username = '';
   $scope.password = '';
   $scope.isAuthenticated = false;
@@ -36,10 +36,14 @@ myApp.controller('UserCtrl', function ($scope, $http, $window) {
         console.log('token: ' + data.token);
         $window.sessionStorage.token = data.token;
         $scope.isAuthenticated = true;
-        var encodedProfile = myUtils.splitJwt(data.token).encodedPayload;
-        var profile = JSON.parse(Base64.decode(encodedProfile));
+
+        // other functions in 'jwtHelper' are: 'urlBase64Decode' and 'isTokenExpired
+        var tokenExpDate = jwtHelper.getTokenExpirationDate(data.token);
+        console.log('token expiration date: ' + tokenExpDate);
+        var tokenPayload = jwtHelper.decodeToken(data.token);
+
         $scope.error = '';
-        $scope.welcome = 'Welcome ' + profile.first_name + ' ' + profile.last_name;
+        $scope.welcome = 'Welcome ' + tokenPayload.first_name + ' ' + tokenPayload.last_name;
         // clear username and password
         $scope.username = '';
         $scope.password = '';
