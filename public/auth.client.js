@@ -104,6 +104,12 @@ myApp.factory('authBearerInterceptor', function ($rootScope, $q, $window) {
       return config;
     },
     responseError: function (rejection) {
+      /*
+      if (canRecover(rejection)) {
+        return responseOrNewPromise;
+      }
+       */
+      console.log('authBearerInterceptor. status: ' + rejection.status);
       if (rejection.status === 401) {
         // handle the case where the user is not authenticated
       }
