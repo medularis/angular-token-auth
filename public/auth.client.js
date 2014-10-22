@@ -94,7 +94,7 @@ myApp.controller('UserCtrl', function ($scope, $http, $window) {
  INTERCEPTORS
  */
 
-myApp.factory('authInterceptor', function ($rootScope, $q, $window) {
+myApp.factory('authBearerInterceptor', function ($rootScope, $q, $window) {
   return {
     request: function (config) {
       config.headers = config.headers || {};
@@ -113,5 +113,5 @@ myApp.factory('authInterceptor', function ($rootScope, $q, $window) {
 });
 
 myApp.config(function ($httpProvider) {
-  $httpProvider.interceptors.push('authInterceptor');
+  $httpProvider.interceptors.push('authBearerInterceptor');
 });
