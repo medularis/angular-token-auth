@@ -17,25 +17,6 @@ myUtils.splitJwt = function (token) {
   };
 };
 
-myUtils.decodeBase64url = function (str) {
-  // Unfortunately there are variants of Base64 and we need to handle them
-  // http://en.wikipedia.org/wiki/Base64#Implementations_and_history
-  var output = str.replace('-', '+').replace('_', '/');
-  switch (output.length % 4) {
-    case 0:
-      break;
-    case 2:
-      output += '==';
-      break;
-    case 3:
-      output += '=';
-      break;
-    default:
-      throw 'Illegal base64url string!';
-  }
-  return window.atob(output); //polifyll https://github.com/davidchambers/Base64.js
-};
-
 /*
  CONTROLLERS
  */
@@ -56,7 +37,7 @@ myApp.controller('UserCtrl', function ($scope, $http, $window) {
         $window.sessionStorage.token = data.token;
         $scope.isAuthenticated = true;
         var encodedProfile = myUtils.splitJwt(data.token).encodedPayload;
-        var profile = JSON.parse(myUtils.decodeBase64url(encodedProfile));
+        var profile = JSON.parse(Base64.decode(encodedProfile));
         $scope.error = '';
         $scope.welcome = 'Welcome ' + profile.first_name + ' ' + profile.last_name;
       })
