@@ -28,7 +28,7 @@ var consts = {
   }
 };
 
-var utils = {};
+var utils = utils || {};
 
 utils.authenticate = function (username, password) {
   return consts.user_credentials[username] === password;
